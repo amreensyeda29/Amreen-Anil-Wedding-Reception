@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const envelopeScene = document.getElementById("envelopeScene");
     const invitation = document.getElementById("invitation");
 
+    let autoScrollInterval = null;
+    let isUserInteracting = false;
+    const SCROLL_TIME = 5000; // 5 seconds per screen
+
     if (waxSeal) {
         waxSeal.addEventListener("click", () => {
             waxSeal.disabled = true;
@@ -19,38 +23,57 @@ document.addEventListener("DOMContentLoaded", () => {
             if (music) {
                 music.play().then(() => {
                     if (musicButton) musicButton.classList.add("playing");
-                }).catch(() => {
-                    console.log("Music awaiting interaction");
-                });
+                }).catch(() => console.log("Music awaiting interaction"));
             }
 
-            // Reveal main content smoothly after 3 seconds
+            // Reveal invitation content
             setTimeout(() => {
-                if (invitation) {
-                    invitation.classList.add("show");
-                }
-            }, 3000);
+                if (invitation) invitation.classList.add("show");
+            }, 2000);
 
-            // Scroll to the cover/counter page after 4.5 seconds (gives ample time to read the poem)
+            // Start smooth auto scroll
             setTimeout(() => {
-                const cover = document.querySelector(".cover-photo");
-                if (cover) {
-                    cover.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-            }, 4500);
+                startAutoScroll();
+            }, SCROLL_TIME);
         });
     }
 
-    /* MUSIC PLAYER */
+    function startAutoScroll() {
+        const sections = Array.from(document.querySelectorAll(".screen-section, .closing"));
+        let currentIndex = 0;
+
+        function scrollToNextSection() {
+            if (isUserInteracting) return;
+
+            if (currentIndex < sections.length) {
+                sections[currentIndex].scrollIntoView({ behavior: "smooth", block: "start" });
+                currentIndex++;
+            } else {
+                clearInterval(autoScrollInterval);
+            }
+        }
+
+        scrollToNextSection();
+        autoScrollInterval = setInterval(scrollToNextSection, SCROLL_TIME);
+    }
+
+    /* PAUSE AUTO SCROLL IF USER TOUCHES SCREEN */
+    const pauseScroll = () => {
+        isUserInteracting = true;
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+    };
+
+    window.addEventListener("touchstart", pauseScroll, { passive: true });
+    window.addEventListener("wheel", pauseScroll, { passive: true });
+
+    /* MUSIC CONTROLLER */
     const music = document.getElementById("weddingMusic");
     const musicButton = document.getElementById("musicButton");
 
     if (musicButton && music) {
         musicButton.addEventListener("click", () => {
             if (music.paused) {
-                music.play().then(() => {
-                    musicButton.classList.add("playing");
-                });
+                music.play().then(() => musicButton.classList.add("playing"));
             } else {
                 music.pause();
                 musicButton.classList.remove("playing");
@@ -59,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* COUNTDOWN TIMER */
-    const weddingDate = new Date("January 31 2027 18:30:00").getTime();
+    const weddingDate = new Date("January 31 2027 11:00:00").getTime();
 
     function updateCountdown() {
         const now = new Date().getTime();
@@ -67,20 +90,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (distance <= 0) return;
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
         const dEl = document.getElementById("days");
         const hEl = document.getElementById("hours");
         const mEl = document.getElementById("minutes");
         const sEl = document.getElementById("seconds");
 
-        if (dEl) dEl.textContent = String(days).padStart(2, "0");
-        if (hEl) hEl.textContent = String(hours).padStart(2, "0");
-        if (mEl) mEl.textContent = String(minutes).padStart(2, "0");
-        if (sEl) sEl.textContent = String(seconds).padStart(2, "0");
+        if (dEl) dEl.textContent = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, "0");
+        if (hEl) hEl.textContent = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, "0");
+        if (mEl) mEl.textContent = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, "0");
+        if (sEl) sEl.textContent = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, "0");
     }
 
     updateCountdown();
@@ -97,8 +115,8 @@ BEGIN:VEVENT
 SUMMARY:Wedding Reception - Amreen & Anil
 DESCRIPTION:Celebrating Amreen & Anil #AA♾️♥️
 LOCATION:Goldfinch Retreat, Bengaluru
-DTSTART:20270131T183000
-DTEND:20270131T223000
+DTSTART:20270131T110000
+DTEND:20270131T160000
 END:VEVENT
 END:VCALENDAR`;
 
@@ -109,22 +127,4 @@ END:VCALENDAR`;
             link.click();
         });
     }
-
-    /* SCROLL REVEAL ANIMATIONS */
-    const revealItems = document.querySelectorAll(".venue-section, .rsvp-section, .closing");
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-            }
-        });
-    }, { threshold: 0.15 });
-
-    revealItems.forEach((item) => {
-        item.style.opacity = "0";
-        item.style.transform = "translateY(40px)";
-        item.style.transition = "1s ease";
-        observer.observe(item);
-    });
 });

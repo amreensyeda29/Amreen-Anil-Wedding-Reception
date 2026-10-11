@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Amreen & Anil | Wedding Invitation</title>
     
-    <meta name="description" content="Wedding Reception invitation of Amreen & Anil #AA♾️♥">
+    <meta name="description" content="Wedding Reception invitation of Amreen & Anil #AA♾️♥️">
     <meta property="og:title" content="Amreen & Anil Wedding Invitation">
     <meta property="og:image" content="images/logo.jpg">
     <meta property="og:type" content="website">
@@ -14,7 +14,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -29,19 +29,19 @@
     </audio>
     <button id="musicButton" class="music-button" aria-label="Toggle Music">♫</button>
 
-    <!-- 3D VERTICAL ENVELOPE EXPERIENCE (ENTRY POINT) -->
+    <!-- 1. VERTICAL ENVELOPE LANDING SCREEN -->
     <section id="envelopeScene">
         <div class="real-envelope">
             <div class="envelope-back"></div>
             
-            <!-- REVEALED CARD (ONLY WATERMARK BACKGROUND & SHORTENED POEM) -->
+            <!-- REVEALED POEM CARD -->
             <div class="hidden-card">
                 <div class="card-watermark-bg"></div>
                 <div class="mini-card">
                     <p class="envelope-poem">
                         Two souls, one journey.<br>
                         Two hearts, one destiny.<br>
-                        A love that stands the test of time.
+                        A love that stands the test of time!
                     </p>
                 </div>
             </div>
@@ -49,115 +49,139 @@
             <!-- ENVELOPE FRONT CONTAINER -->
             <div class="envelope-front">
                 <div class="envelope-intro-text">
-                    <p class="poetic-quote">
-                        A celebration of love with timeless union.
-                    </p>
+                    <p class="poetic-quote">A celebration of love with timeless union!</p>
                     <p class="tap-text">Tap the seal to open</p>
                 </div>
             </div>
 
             <div class="envelope-flap-3d"></div>
             
-            <!-- REALISTIC ORGANIC WAX SEAL -->
+            <!-- CUSTOM WAX SEAL BUTTON -->
             <button id="waxSeal" class="wax-seal" aria-label="Open Invitation">
-                <span class="seal-inner">AA</span>
+                <img src="images/seal.png" alt="Wax Seal" class="seal-img" onerror="this.src='images/seal.jpg';">
             </button>
         </div>
     </section>
 
-    <!-- MAIN INVITATION CONTENT -->
+    <!-- MAIN INVITATION FLOW -->
     <main id="invitation">
 
-        <!-- COVER PHOTO SECTION (COUNTDOWN ONLY) -->
-        <section class="cover-photo">
-            <div class="cover-overlay">
+        <!-- 2. COVER PHOTO & COUNTDOWN -->
+        <section class="screen-section cover-photo">
+            <div class="card-wrapper cover-overlay">
                 <img src="images/cover.jpg" alt="Amreen and Anil" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80'">
                 <div class="cover-details">
                     <h1>Amreen <span>♥</span> Anil</h1>
-                    <p>Wedding Reception</p>
+                    <p class="countdown-title">The countdown begins</p>
                     <div class="cover-countdown">
-                        <div><span id="days">00</span><small>Days</small></div>
-                        <div><span id="hours">00</span><small>Hours</small></div>
-                        <div><span id="minutes">00</span><small>Minutes</small></div>
-                        <div><span id="seconds">00</span><small>Seconds</small></div>
+                        <div><span id="days">00</span><br><small>Days</small></div>
+                        <div><span id="hours">00</span><br><small>Hours</small></div>
+                        <div><span id="minutes">00</span><br><small>Mins</small></div>
+                        <div><span id="seconds">00</span><br><small>Secs</small></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ROYAL INVITATION CARD (BACKGROUND WATERMARK ONLY) -->
-        <div class="royal-card-container">
-            <div class="royal-card">
-                <div class="royal-watermark-bg"></div>
-                <div class="royal-card-inner">
+        <!-- 3. ROYAL RECEPTION DETAILS -->
+        <section class="screen-section royal-card-container">
+            <div class="card-wrapper royal-card">
+                <div class="card-watermark-bg logo-watermark"></div>
+                <div class="royal-card-inner card-relative-content">
                     <div class="royal-content">
-                        <p class="small-title">"Every love story is special, our's becomes even more meaningful with your presence."</p>
-                        <h1>Amreen <span>&</span> Anil</h1>
+                        <p class="small-title">"Every love story is special. Our's becomes even more meaningful with your presence"</p>
+                        <h1>Amreen <span>♥</span> Anil</h1>
                         <div class="gold-divider">✦ ✦ ✦</div>
                         <h2>Wedding Reception</h2>
                         <p class="date">
+                            <strong>Sunday</strong> <br>
                             <span class="date-number">31 January 2027</span> <br>
-							<strong>Sunday</strong> <br>
                             <span class="event-time">11:00 AM (Followed by Lunch)</span>
                         </p>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- VENUE SECTION -->
-        <section class="venue-section">
-            <div class="gold-frame">
-                <h2>Celebration Venue</h2>
-                <div class="divider">✦</div>
-                <h3>Goldfinch Retreat</h3>
-                <p>
-                    Rashi Orchid, Kempegowda International Airport Road, Behind ITC, Chickajal P.O., Tharabanahalli, Bengaluru, Karnataka 562110, India
-                </p>
-                <a href="https://maps.app.goo.gl/T1vYPPjKGmGFTHG3A" target="_blank" class="luxury-button">Open Google Maps</a>
-            </div>
         </section>
 
-        <!-- GALLERY PHOTOS -->
-        <section class="photo-section">
-            <div class="photo-frame"><img src="images/photo1.jpg" alt="Photo 1"></div>
-        </section>
-        <section class="photo-section">
-            <div class="photo-frame"><img src="images/photo2.jpg" alt="Photo 2"></div>
-        </section>
-        <section class="photo-section">
-            <div class="photo-frame"><img src="images/photo3.jpg" alt="Photo 3"></div>
-        </section>
-        <section class="photo-section">
-            <div class="photo-frame"><img src="images/photo4.jpg" alt="Photo 4"></div>
-        </section>
-
-        <!-- RSVP -->
-        <section class="rsvp-section">
-            <div class="gold-frame">
-                <h2>We Would Love Your Presence</h2>
-                <p>Kindly confirm your attendance</p>
-                <div class="rsvp-buttons">
-                    <a href="https://wa.me/917406032020?text=Hello%20Amreen,%20I%20would%20like%20to%20RSVP%20for%20your%20wedding%20reception." target="_blank" class="luxury-button">
-                        WhatsApp RSVP
-                    </a>
-                    <a href="tel:+917406032020" class="luxury-button outline">
-                        Call Amreen
-                    </a>
+        <!-- 4. VENUE -->
+        <section class="screen-section venue-section">
+            <div class="card-wrapper gold-frame">
+                <div class="card-watermark-bg logo-watermark"></div>
+                <div class="card-relative-content">
+                    <h2>Celebration Venue</h2>
+                    <div class="gold-divider">✦</div>
+                    <h3>Goldfinch Retreat</h3>
+                    <p>
+                        Rashi Orchid, Kempegowda International Airport Road, Behind ITC, Chickajal P.O., Tharabanahalli, Bengaluru, Karnataka 562110
+                    </p>
+                    <a href="https://maps.app.goo.gl/T1vYPPjKGmGFTHG3A" target="_blank" class="luxury-button">Open Google Maps</a>
                 </div>
             </div>
         </section>
 
-        <!-- CALENDAR -->
-        <section class="calendar-section" style="text-align: center; padding: 40px 20px;">
-            <button id="calendarButton" class="luxury-button">
-                Add To Calendar 📅
-            </button>
+        <!-- 5. RSVP -->
+        <section class="screen-section rsvp-section">
+            <div class="card-wrapper gold-frame">
+                <div class="card-watermark-bg logo-watermark"></div>
+                <div class="card-relative-content">
+                    <h2>We Would Love Your Presence!</h2>
+					<div class="gold-divider">✦</div>
+                    <p>Kindly confirm your attendance.</p>
+                    <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+                        <a href="https://wa.me/917406032020?text=Hello%20Amreen,%20I%20would%20like%20to%20RSVP%20for%20your%20wedding%20reception." target="_blank" class="luxury-button">
+                            WhatsApp RSVP
+                        </a>
+                        <a href="tel:+917406032020" class="luxury-button outline">
+                            Call Amreen
+                        </a>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button id="calendarButton" class="luxury-button">Add To Calendar 📅</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- CLOSING (NO LOGO) -->
+        <!-- 6. GIFTING / UPI SCANNER -->
+        <section class="screen-section gift-section">
+            <div class="card-wrapper gold-frame">
+                <div class="card-watermark-bg logo-watermark"></div>
+                <div class="card-relative-content">
+                    <h2>Digital Wishes</h2>
+                    <p style="font-size:1.2rem; margin-bottom:12px; font-weight:1000;">
+                        Your presence is our biggest gift!<br>
+						Should you wish to bless us, we kindly request no boxed gifts.
+                    </p>
+                    <div class="qr-container">
+                        <img src="images/QRcode.jpg" alt="UPI QR Code" class="qr-image" onerror="this.alt='[ QRcode.jpg ]';">
+                    </div>
+                    <p style="font-size:1.2rem; font-weight:800; margin-top:8px;">Scan to send digital blessings.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. GALLERY -->
+        <section class="screen-section gallery-section">
+            <div class="card-wrapper gallery-wrapper">
+                <div class="card-watermark-bg faint-logo-watermark"></div>
+                <div class="card-relative-content" style="width:100%;">
+                    <h2>Memories & Moments</h2>
+                    <div class="gallery-grid">
+                        <div class="gallery-item"><img src="images/photo1.jpg" alt="Memory 1"></div>
+                        <div class="gallery-item"><img src="images/photo2.jpg" alt="Memory 2"></div>
+						<div class="gallery-item"><img src="images/photo3.jpg" alt="Memory 2"></div>
+                        <div class="gallery-item"><img src="images/photo4.jpg" alt="Memory 4"></div>
+                        <div class="gallery-item"><img src="images/photo5.jpg" alt="Memory 5"></div>
+                        <div class="gallery-item"><img src="images/photo6.jpg" alt="Memory 6"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. CLOSING -->
         <section class="closing">
-            <p>With love and gratitude, we look forward to celebrating this beautiful journey with you.</p>
+            <p>With love and gratitude,<br>
+			we look forward to celebrating with you!</p>
             <div class="hashtag">#AA♾️♥️</div>
         </section>
 
