@@ -696,3 +696,75 @@ body {
     color: #c8b2d6;
     letter-spacing: 2px;
 }
+/* GALLERY CARD CONTAINER FIX */
+.gallery-section .card-relative-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 16px 12px;
+    box-sizing: border-box;
+    z-index: 2; /* Ensures title stays above watermark */
+}
+
+/* GALLERY GRID LAYOUT FOR MOBILE */
+.gallery-grid,
+.photo-gallery,
+.gallery-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 balanced columns */
+    gap: 8px;                               /* Clean spacing between photos */
+    width: 100%;
+    max-width: 100%;
+    margin-top: 10px;
+    overflow-y: auto;                       /* Smooth scrolling if photos exceed card height */
+    max-height: calc(100dvh - 180px);        /* Prevents spilling outside the card frame */
+    padding-bottom: 8px;
+}
+
+/* INDIVIDUAL PHOTO STYLING */
+.gallery-grid img,
+.photo-gallery img,
+.gallery-wrapper img {
+    width: 100%;
+    height: 130px;                          /* Fixed uniform height for grid symmetry */
+    object-fit: cover;                      /* Prevents image distortion/stretching */
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+/* Container for 2 photos per card */
+.gallery-two-pack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    height: calc(100% - 50px);
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+    box-sizing: border-box;
+}
+
+/* Photo wrapper frame */
+.photo-container {
+    width: 100%;
+    height: 45%; /* Gives each photo ample vertical space without overflow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Image behavior: Uncropped & complete display */
+.gallery-two-pack img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Keeps full image visible without cropping any edges */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
