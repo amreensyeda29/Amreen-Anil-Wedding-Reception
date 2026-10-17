@@ -65,16 +65,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    /* PAUSE AUTO SCROLL ONLY IF USER ACTIVELY INTERACTS AFTER IT STARTS */
-    const pauseScroll = () => {
-        if (autoScrollStarted) {
-            isUserInteracting = true;
-            if (autoScrollInterval) clearInterval(autoScrollInterval);
-        }
-    };
+   /* PAUSE AUTO SCROLL ONLY IF USER ACTIVELY INTERACTS (Excluding Copy/UI Buttons) */
+const pauseScroll = (e) => {
+    // If the user clicks a copy button or link, don't kill the auto-scroll flow
+    if (e.target.closest('.copy-btn') || e.target.closest('a') || e.target.closest('button')) {
+        return;
+    }
 
-    window.addEventListener("touchstart", pauseScroll, { passive: true });
-    window.addEventListener("wheel", pauseScroll, { passive: true });
+    if (autoScrollStarted) {
+        isUserInteracting = true;
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+    }
+};
+
+window.addEventListener("click", pauseScroll, { passive: true });
+window.addEventListener("touchstart", pauseScroll, { passive: true });
+window.addEventListener("wheel", pauseScroll, { passive: true });
 
     /* MUSIC CONTROLLER */
     const music = document.getElementById("weddingMusic");
