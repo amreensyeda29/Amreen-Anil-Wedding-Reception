@@ -235,7 +235,7 @@ body {
 
 .envelope-poem {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(1.8rem, 4.5vw, 1.5rem);
+    font-size: clamp(1.5rem, 4.5vw, 1.5rem);
     font-style: italic;
     font-weight: 1000;
     line-height: 1.7;
@@ -481,10 +481,10 @@ body {
 }
 
 .date .date-number {
-    font-family: "Montserrat", sans-serif;
-    font-size: 1.3rem;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
     color: #1e293b;
-    font-weight: 700;
+    font-weight: 1000;
     display: inline-block;
     margin: 2px 0;
 }
@@ -492,11 +492,10 @@ body {
 .date .event-time {
     font-family: "Cormorant Garamond", serif;
     color: #1e293b;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 1000;
 	font-style: italic;
-    margin-top: 10px;
-    display: block;
+   margin: 2px 0;
 }
 
 /* ==========================================
@@ -730,7 +729,7 @@ body {
 .gallery-wrapper img {
     width: 100%;
     height: 130px;                          /* Fixed uniform height for grid symmetry */
-    object-fit: cover;                      /* Prevents image distortion/stretching */
+    object-fit: contain;                      /* Prevents image distortion/stretching */
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.8);
@@ -767,4 +766,94 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.9);
+}
+/* =======================================================
+   UNIVERSAL SCROLLING & VIEWPORT FIX FOR ALL BROWSERS
+   ======================================================= */
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Essential for smooth touch scrolling on iOS */
+}
+
+.screen-section {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    /* your sage-green theme background/padding */
+}
+
+
+/* LIGHTBOX OVERLAY */
+.lightbox-modal {
+    display: none; 
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 15px;
+	pointer-events: auto; /* Ensures touch events are captured here */
+    touch-action: none;   /* Disables native pinch/scroll gestures on the overlay */
+}
+
+/* CONTENT WRAPPER */
+.lightbox-content-wrapper {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* PREVIEW IMAGE */
+#lightboxImg {
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* CLOSE BUTTON */
+.lightbox-close-btn {
+    margin-bottom: 12px;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: background-color 0.2s ease;
+}
+
+.lightbox-close-btn:hover {
+    background-color: #dcebe4;
 }

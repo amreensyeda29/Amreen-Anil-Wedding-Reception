@@ -1,16 +1,20 @@
 /* ==========================================
    AMREEN & ANIL - WEDDING INVITATION JS
 ========================================== */
+/* ==========================================
+   AMREEN & ANIL - GLOBAL CONTROL VARIABLES
+========================================== */
+let autoScrollInterval = null;
+let isUserInteracting = false;
+let autoScrollStarted = false;
+const SCROLL_TIME = 5000; // 5 seconds per screen
+let savedScrollPosition = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const waxSeal = document.getElementById("waxSeal");
     const envelopeScene = document.getElementById("envelopeScene");
     const invitation = document.getElementById("invitation");
-
-    let autoScrollInterval = null;
-    let isUserInteracting = false;
-    const SCROLL_TIME = 5000; // 5 seconds per screen
 
     if (waxSeal) {
         waxSeal.addEventListener("click", () => {
@@ -31,8 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (invitation) invitation.classList.add("show");
             }, 2000);
 
-            // Start smooth auto scroll
+            // Start smooth auto scroll after envelope opens
             setTimeout(() => {
+                autoScrollStarted = true;
                 startAutoScroll();
             }, SCROLL_TIME);
         });
@@ -53,14 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        scrollToNextSection();
-        autoScrollInterval = setInterval(scrollToNextSection, SCROLL_TIME);
+        // Only scroll if user hasn't intervened
+        if (!isUserInteracting) {
+            scrollToNextSection();
+            autoScrollInterval = setInterval(scrollToNextSection, SCROLL_TIME);
+        }
     }
 
-    /* PAUSE AUTO SCROLL IF USER TOUCHES SCREEN */
+    /* PAUSE AUTO SCROLL ONLY IF USER ACTIVELY INTERACTS AFTER IT STARTS */
     const pauseScroll = () => {
-        isUserInteracting = true;
-        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        if (autoScrollStarted) {
+            isUserInteracting = true;
+            if (autoScrollInterval) clearInterval(autoScrollInterval);
+        }
     };
 
     window.addEventListener("touchstart", pauseScroll, { passive: true });
@@ -237,3 +247,144 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.removeChild(textarea);
     }
 });
+
+/* =======================================================
+   UNIVERSAL AUTO-SCROLL FUNCTION FOR ALL DEVICES
+   ======================================================= */
+function scrollToSection(targetId) {
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) return;
+
+    // Method 1: Modern smooth scroll (Chrome, Firefox, Safari, Edge, Samsung Internet)
+    try {
+        targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest'
+        });
+    } catch (e) {
+        // Method 2: Legacy fallback for older devices / restricted webviews
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    }
+}
+
+/* AUTOMATICALLY ADVANCE TO NEXT CARD */
+function autoScrollToNext() {
+    const sections = Array.from(document.querySelectorAll('.screen-section'));
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Find the next card section on screen
+    for (let i = 0; i < sections.length; i++) {
+        const sectionTop = sections[i].offsetTop;
+        if (sectionTop > currentScroll + 20) {
+            scrollToSection(sections[i].id);
+            break;
+        }
+    }
+}
+
+/* =======================================================
+   PRECISE VIEWPORT-BASED LIGHTBOX & AUTO-SCROLL
+   ======================================================= */
+
+let currentViewingIndex = 0;
+
+// Helper function to find the exact card currently visible on screen
+function getActiveSectionIndex() {
+    const sections = Array.from(document.querySelectorAll(".screen-section, .closing"));
+    let activeIndex = 0;
+    let minDistance = Infinity;
+    
+    sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.abs(rect.top); // Distance from the top of the visible screen
+        if (distance < minDistance) {
+            minDistance = distance;
+            activeIndex = index;
+        }
+    });
+    return activeIndex;
+}
+
+// 1. Open Lightbox and get the exact active card index
+document.addEventListener("click", function (event) {
+    if (event.target.tagName === "IMG" && (event.target.closest('.gallery-two-pack') || event.target.closest('.gallery-grid') || event.target.closest('.photo-container') || event.target.closest('.screen-section'))) {
+        
+        if (event.target.classList.contains('logo-watermark') || event.target.alt === "Watermark") return;
+
+        // Find the precise card currently on screen right now
+        currentViewingIndex = getActiveSectionIndex();
+
+        const lightbox = document.getElementById('photoLightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+
+        if (lightbox && lightboxImg) {
+            lightboxImg.src = event.target.src;
+            lightbox.style.display = 'flex';
+            
+            // Pause auto-scroll
+            isUserInteracting = true;
+            if (autoScrollInterval) clearInterval(autoScrollInterval);
+        }
+    }
+});
+
+// 2. Block backdrop scrolling on the overlay
+document.addEventListener("DOMContentLoaded", function () {
+    const lightbox = document.getElementById('photoLightbox');
+    if (!lightbox) return;
+
+    lightbox.addEventListener('touchmove', function (e) {
+        if (!e.target.closest('#lightboxImg')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    lightbox.addEventListener('wheel', function (e) {
+        if (!e.target.closest('#lightboxImg')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Close on backdrop tap
+    lightbox.addEventListener('click', function (e) {
+        if (e.target.id === 'photoLightbox') {
+            closeLightbox();
+        }
+    });
+});
+
+/* 3. CLOSE LIGHTBOX & RESUME FORWARD SMOOTHLY */
+function closeLightbox() {
+    const lightbox = document.getElementById('photoLightbox');
+    if (!lightbox) return;
+
+    lightbox.style.display = 'none';
+
+    // Resume auto-scroll forward from the card *after* the one we were viewing
+    if (autoScrollStarted) {
+        isUserInteracting = false;
+        
+        if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+        }
+
+        let nextIndex = currentViewingIndex + 1;
+
+        autoScrollInterval = setInterval(() => {
+            if (isUserInteracting) return;
+            
+            const sections = Array.from(document.querySelectorAll(".screen-section, .closing"));
+            if (nextIndex < sections.length) {
+                sections[nextIndex].scrollIntoView({ behavior: "smooth", block: "start" });
+                nextIndex++;
+            } else {
+                clearInterval(autoScrollInterval);
+            }
+        }, SCROLL_TIME);
+    }
+}
