@@ -79,19 +79,20 @@ body {
 }
 
 /* ==========================================
-   UNIFORM CARD CONTAINERS
+   UNIFORM CARD CONTAINERS & SCREEN-FIT FIXES
 ========================================== */
 .screen-section {
     min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 15px;
+    padding: 12px 10px;
 }
 
 .card-wrapper {
-    width: min(90vw, 420px);
-    height: min(82dvh, 600px);
+    width: min(92vw, 400px);
+    height: min(85dvh, 580px);
+    max-height: 580px;
     border-radius: 16px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     position: relative;
@@ -100,7 +101,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #ffffff;
+    background: #f4f8f6;
 }
 
 .card-relative-content {
@@ -120,14 +121,14 @@ body {
     background-image: url('images/logo.jpg');
     background-size: cover;
     background-position: center;
-    opacity: 0.40; /* Consistent bright visibility across all covers */
+    opacity: 0.35; /* Consistent bright visibility across all cards */
     filter: brightness(1.05) contrast(1.02);
     pointer-events: none;
     z-index: 1;
 }
 
 .faint-logo-watermark {
-    opacity: 0.30; /* Faint backdrop specifically for photo gallery grid clarity */
+    opacity: 0.30;
 }
 
 /* ==========================================
@@ -139,12 +140,13 @@ body {
     justify-content: center;
     align-items: center;
     perspective: 1500px;
-    padding: 20px 15px;
+    padding: 12px 10px;
 }
 
 .real-envelope {
-    width: min(90vw, 420px);
-    height: min(82dvh, 600px);
+    width: min(92vw, 400px);
+    height: min(85dvh, 580px);
+    max-height: 580px;
     position: relative;
     transform-style: preserve-3d;
 }
@@ -206,7 +208,7 @@ body {
     inset: 0;
     width: 100%;
     height: 100%;
-    background: #ffffff;
+    background: #f4f8f6;
     border-radius: 16px;
     z-index: 10;
     opacity: 0;
@@ -219,24 +221,24 @@ body {
 }
 
 .hidden-card .card-watermark-bg {
-    opacity: 0.40;
-    filter: brightness(1.08) contrast(1.02);
+    opacity: 0.35;
+    filter: brightness(1.05) contrast(1.02);
 }
 
 .mini-card {
     position: relative;
     z-index: 3;
-    padding: 30px 20px;
+    padding: 20px 15px;
     text-align: center;
     width: 100%;
 }
 
 .envelope-poem {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(1.35rem, 5.2vw, 1.65rem);
+    font-size: clamp(1.8rem, 4.5vw, 1.5rem);
     font-style: italic;
-    font-weight: 600;
-    line-height: 1.8;
+    font-weight: 1000;
+    line-height: 1.7;
     color: #1e293b;
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
@@ -256,7 +258,7 @@ body {
 
 .poetic-quote {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(1.25rem, 4.2vw, 1.45rem);
+    font-size: clamp(1.15rem, 3.8vw, 1.35rem);
     color: #1a2e26;
     font-style: italic;
     font-weight: 700;
@@ -265,8 +267,8 @@ body {
 
 .tap-text {
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.75rem, 2.8vw, 0.85rem);
-    letter-spacing: 2.5px;
+    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: #2c4238;
     font-weight: 700;
@@ -279,8 +281,8 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 105px;
-    height: 105px;
+    width: 95px;
+    height: 95px;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -339,7 +341,7 @@ body {
 .cover-overlay img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
 }
 
@@ -352,14 +354,14 @@ body {
     align-items: center;
     text-align: center;
     color: #ffffff;
-    padding: 20px 15px;
+    padding: 18px 12px;
     background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 60%);
     z-index: 5;
 }
 
 .cover-details h1 {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    font-size: clamp(2.2rem, 6.5vw, 3.2rem);
     font-style: italic;
     color: #ffffff;
     text-shadow: 0 2px 6px rgba(0,0,0,0.8);
@@ -369,18 +371,19 @@ body {
 
 .countdown-title {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(1.15rem, 3.8vw, 1.4rem);
-    letter-spacing: 1.5px;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    font-weight: 600;
+    font-size: clamp(1rem, 3.5vw, 1.3rem);
+    letter-spacing: 1.0px;
+    margin-bottom: 4px;
+    /*text-transform: uppercase;*/
+    font-weight: 1000;
     color: #f1f5f9;
     text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+	font-style: italic;
 }
 
 .cover-countdown {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     margin-top: 4px;
 }
 
@@ -389,12 +392,12 @@ body {
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255,255,255,0.2);
     border-radius: 8px;
-    padding: 6px 8px;
-    min-width: 48px;
+    padding: 4px 6px;
+    min-width: 44px;
 }
 
 .cover-countdown span {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-family: "Cormorant Garamond", serif;
     font-weight: 700;
     color: #ffffff;
@@ -402,7 +405,7 @@ body {
 
 .cover-countdown small { 
     font-family: "Montserrat", sans-serif;
-    font-size: .6rem; 
+    font-size: .55rem; 
     color: #e2eae3;
 }
 
@@ -410,7 +413,7 @@ body {
    3. ROYAL RECEPTION CARD
 ========================================== */
 .royal-card {
-    background: #ffffff;
+    background: #f4f8f6;
     border: 1px solid #c2d8cd;
     position: relative;
 }
@@ -418,7 +421,7 @@ body {
 .royal-card-inner {
     position: relative;
     z-index: 3;
-    padding: 20px 15px;
+    padding: 18px 12px;
     text-align: center;
     color: #1e293b;
     width: 100%;
@@ -426,18 +429,18 @@ body {
 
 .small-title {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(1.2rem, 3.8vw, 1.45rem);
+    font-size: clamp(1.5rem, 3.5vw, 1.35rem);
     font-style: italic;
-    font-weight: 600;
+    font-weight: 800;
     color: #1e293b;
-    margin-bottom: 12px;
-    line-height: 1.45;
+    margin-bottom: 8px;
+    line-height: 1.4;
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 .royal-content h1 {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(2.8rem, 9.5vw, 4rem);
+    font-size: clamp(2.4rem, 8.5vw, 3.6rem);
     font-weight: 500;
     font-style: italic;
     color: #1e293b;
@@ -448,13 +451,14 @@ body {
 
 .gold-divider { 
     color: #8b3a52; 
-    margin: 10px 0; 
-    font-size: 1.3rem; 
+    margin: 6px 0; 
+    font-size: 1.1rem; 
+	font style: italic;
 }
 
 .royal-content h2 {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(2rem, 6vw, 2.6rem);
+    font-size: clamp(1.8rem, 5.5vw, 2.4rem);
     color: #1e293b;
     font-weight: 600;
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
@@ -463,115 +467,170 @@ body {
 .date {
     font-family: "Cormorant Garamond", serif;
     color: #1e293b;
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
 .date strong {
     font-family: "Montserrat", sans-serif;
     color: #1e293b;
-    font-size: 1.15rem;
-    text-transform: uppercase;
+    font-size: 1.05rem;
     letter-spacing: 2px;
     font-weight: 700;
 }
 
 .date .date-number {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 2.1rem;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.3rem;
     color: #1e293b;
     font-weight: 700;
     display: inline-block;
-    margin: 3px 0;
+    margin: 2px 0;
 }
 
 .date .event-time {
     font-family: "Cormorant Garamond", serif;
     color: #1e293b;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 1000;
-    margin-top: 4px;
+	font-style: italic;
+    margin-top: 10px;
     display: block;
 }
 
 /* ==========================================
-   4, 5, 6. VENUE, RSVP & GIFT CARDS
+   4, 5, 6. VENUE, RSVP & GIFT CARDS (RESPONSIVE)
 ========================================== */
 .gold-frame {
-    padding: 25px 20px;
-    background: #ffffff;
+    padding: 18px 15px;
+    background: #f4f8f6;
     border: 1px solid #c2d8cd;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.gold-frame h2 { 
+.gold-frame h2, 
+.gallery-wrapper h2 { 
     font-family: "Cormorant Garamond", serif; 
-    font-size: clamp(2.1rem, 6vw, 2.6rem); 
+    font-size: clamp(1.7rem, 5.2vw, 2.3rem); 
     color: #1e293b; 
     font-weight: 600; 
+    line-height: 1.2;
+    margin-bottom: 4px;
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 .gold-frame h3 { 
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(1.25rem, 4vw, 1.5rem); 
+    font-size: clamp(1.1rem, 3.5vw, 1.35rem); 
     color: #3a4b5c; 
-    margin: 6px 0; 
+    margin: 4px 0; 
     font-weight: 600; 
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 .gold-frame p { 
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(1.05rem, 3.5vw, 1.2rem); 
+    font-size: clamp(0.95rem, 3.2vw, 1.1rem); 
     color: #1e293b; 
-    line-height: 1.55; 
-    margin-bottom: 15px; 
+    line-height: 1.4; 
+    margin-bottom: 10px; 
     font-weight: 600; 
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
-/* GIFT & UPI SCANNER */
+/* GIFT & UPI SCANNER & HANDLES */
 .qr-container {
-    width: 160px;
-    height: 160px;
-    margin: 10px auto;
-    padding: 8px;
+    width: 120px;
+    height: 120px;
+    margin: 4px auto;
+    padding: 6px;
     background: #fff;
-    border-radius: 12px;
+    border-radius: 10px;
     border: 1px solid #cbd5e1;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
 
 .qr-image { width: 100%; height: 100%; object-fit: contain; }
 
+.upi-handles-container {
+    margin: 6px auto;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.upi-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 5px 8px;
+    font-size: 0.78rem;
+    color: #1e293b;
+    font-weight: 500;
+}
+
+.upi-item strong {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #3a4b5c;
+}
+
+.copy-btn {
+    background: #3a4b5c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 3px 7px;
+    font-size: 0.68rem;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    transition: background 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: #2b3642;
+}
+
+.copy-btn.copied {
+    background: #2e7d32;
+}
+
 /* GALLERY */
 .gallery-wrapper {
-    background: #ffffff;
-    padding: 20px 12px;
+    background: #f4f8f6;
+    padding: 15px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     overflow-y: auto;
 }
 
 .gallery-wrapper h2 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(2.1rem, 6vw, 2.6rem);
-    color: #1e293b;
-    text-align: center;
-    font-weight: 600;
+    margin-bottom: 6px;
 }
 
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 8px;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .gallery-item {
     width: 100%;
-    height: 140px;
+    height: 110px;
     border-radius: 8px;
     background: #f8fafc;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -592,17 +651,18 @@ body {
 /* BUTTONS */
 .luxury-button {
     display: inline-flex;
-    padding: 11px 22px;
+    padding: 9px 18px;
     border-radius: 25px;
     text-decoration: none;
     background: #3a4b5c;
     color: white;
     font-family: "Montserrat", sans-serif;
-    font-size: .82rem;
+    font-size: .78rem;
     font-weight: 600;
     border: none;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-top: 4px;
 }
 
 .luxury-button.outline {
@@ -615,24 +675,23 @@ body {
 .closing {
     background: #3a4b5c;
     color: white;
-    padding: 50px 20px;
+    padding: 40px 15px;
     text-align: center;
 }
 
 .closing p {
     font-family: "Cormorant Garamond", serif;
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-style: italic;
-    line-height: 1.6;
+    line-height: 1.5;
     color: #e2eae3;
     max-width: 450px;
-    margin: 0 auto 10px;
+    margin: 0 auto 8px;
 }
 
 .hashtag {
     font-family: "Cormorant Garamond", serif;
-	font-style: italic;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: #c8b2d6;
     letter-spacing: 2px;
