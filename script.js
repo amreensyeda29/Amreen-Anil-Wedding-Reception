@@ -15,6 +15,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const waxSeal = document.getElementById("waxSeal");
     const envelopeScene = document.getElementById("envelopeScene");
     const invitation = document.getElementById("invitation");
+	
+/* FORCE RESUME AUTO-SCROLL WHEN RETURNING TO THE INVITATION TAB */
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        // Pause timer while you are away on the Google Form tab
+        if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+            autoScrollInterval = null;
+        }
+    } else {
+        // When you come back, unlock interaction and resume scrolling forward from current card
+        if (autoScrollStarted) {
+            isUserInteracting = false; // Force-unlock so scrolling can continue
+            if (autoScrollInterval) clearInterval(autoScrollInterval);
+            
+            let currentIndex = getActiveSectionIndex();
+            
+            autoScrollInterval = setInterval(() => {
+                if (isUserInteracting) return;
+                
+                const sections = Array.from(document.querySelectorAll(".screen-section, .closing"));
+                currentIndex++;
+                
+                if (currentIndex < sections.length) {
+                    sections[currentIndex].scrollIntoView({ behavior: "smooth", block: "start" });
+                } else {
+                    clearInterval(autoScrollInterval);
+                }
+            }, SCROLL_TIME);
+        }
+    }
+});
 
     if (waxSeal) {
         waxSeal.addEventListener("click", () => {
@@ -65,22 +97,44 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-   /* PAUSE AUTO SCROLL ONLY IF USER ACTIVELY INTERACTS (Excluding Copy/UI Buttons) */
+/* PAUSE AUTO SCROLL ONLY ON MANUAL SCROLL/TOUCH OR EXTERNAL LINKS */
 const pauseScroll = (e) => {
-    // If the user clicks a copy button or link, don't kill the auto-scroll flow
-    if (e.target.closest('.copy-btn') || e.target.closest('a') || e.target.closest('button')) {
+    // If user clicks the RSVP form link or any external action button, stop auto-scroll completely
+    if (e.target.closest('a') && e.target.closest('a').getAttribute('href')?.startsWith('http')) {
+        isUserInteracting = true;
+        if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+            autoScrollInterval = null;
+        }
         return;
     }
 
-    if (autoScrollStarted) {
+    // Allow copy buttons and UI controls without killing scroll
+    if (e.target.closest('.copy-btn') || e.target.closest('button')) {
+        return;
+    }
+
+    // If user manually scrolls or touches the screen, stop auto-scroll
+    if (autoScrollStarted && (e.type === 'wheel' || e.type === 'touchstart')) {
         isUserInteracting = true;
-        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+            autoScrollInterval = null;
+        }
     }
 };
 
 window.addEventListener("click", pauseScroll, { passive: true });
 window.addEventListener("touchstart", pauseScroll, { passive: true });
 window.addEventListener("wheel", pauseScroll, { passive: true });
+
+/* STOP AUTO-SCROLL SAFELY WHEN SWITCHING TABS */
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden && autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+    }
+});
 
     /* MUSIC CONTROLLER */
     const music = document.getElementById("weddingMusic");
