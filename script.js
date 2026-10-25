@@ -7,7 +7,7 @@
 let autoScrollInterval = null;
 let isUserInteracting = false;
 let autoScrollStarted = false;
-const SCROLL_TIME = 5000; // 5 seconds per screen
+const SCROLL_TIME = 6000; // 6 seconds per screen
 let savedScrollPosition = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
