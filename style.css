@@ -877,26 +877,35 @@ html, body {
     background-color: #dcebe4;
 }
 
-/* ==========================================
-   BOUNCING SCROLL INDICATOR (ICON ONLY)
-========================================== */
+/* BOUNCING SCROLL INDICATOR WITH TEXT */
 .scroll-indicator {
     position: absolute;
-    bottom: 12px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    gap: 3px;
     z-index: 10;
     pointer-events: none;
 }
 
+.scroll-text {
+    font-family: "Cormorant Garamond", sans-serif;
+	font-style: italic;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #3a4b5c;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
 .chevron {
-    width: 12px;
-    height: 12px;
-    border-right: 2.5px solid #3a4b5c; /* Same uniform color across all pages */
-    border-bottom: 2.5px solid #3a4b5c;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #3a4b5c;
+    border-bottom: 2px solid #3a4b5c;
     transform: rotate(45deg);
     animation: bounce 2s infinite;
 }
@@ -906,9 +915,9 @@ html, body {
         transform: translateY(0) rotate(45deg);
     }
     40% {
-        transform: translateY(-6px) rotate(45deg);
+        transform: translateY(-5px) rotate(45deg);
     }
     60% {
-        transform: translateY(-3px) rotate(45deg);
+        transform: translateY(-2px) rotate(45deg);
     }
 }
