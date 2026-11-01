@@ -92,7 +92,7 @@ END:VCALENDAR`;
     }
 });
 
-/* GLOBAL COPY FUNCTION (Immune to calendar downloads & DOM shifts) */
+/* iOS CHROME COMPLIANT COPY FUNCTION */
 window.copyUPI = function(elementId, buttonElement) {
     const el = document.getElementById(elementId);
     if (!el) {
@@ -113,33 +113,38 @@ window.copyUPI = function(elementId, buttonElement) {
         }, 2000);
     }
 
+    // 1. Try synchronous execution first (Required for iOS Chrome gesture retention)
+    const textarea = document.createElement("textarea");
+    textarea.value = textToCopy;
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    textarea.style.top = "0";
+    textarea.setAttribute("readonly", "");
+    document.body.appendChild(textarea);
+    
+    textarea.focus();
+    textarea.select();
+    textarea.setSelectionRange(0, 99999);
+
+    let success = false;
+    try {
+        success = document.execCommand('copy');
+    } catch (err) {
+        console.error("execCommand error:", err);
+    }
+
+    document.body.removeChild(textarea);
+
+    if (success) {
+        showSuccess();
+        return;
+    }
+
+    // 2. Fallback to Clipboard API if synchronous copy didn't trigger
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(textToCopy)
             .then(showSuccess)
-            .catch(() => fallbackCopy(textToCopy));
-    } else {
-        fallbackCopy(textToCopy);
-    }
-
-    function fallbackCopy(text) {
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.left = "-9999px";
-        textarea.style.top = "0";
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-
-        try {
-            if (document.execCommand('copy')) {
-                showSuccess();
-            }
-        } catch (err) {
-            console.error('Fallback copy failed: ', err);
-        }
-
-        document.body.removeChild(textarea);
+            .catch(err => console.error("Clipboard API failed:", err));
     }
 };
 
