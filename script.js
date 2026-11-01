@@ -86,7 +86,7 @@ END:VCALENDAR`;
             const file = new Blob([calendar], { type: "text/calendar" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(file);
-            link.download = "Amreen-Anil-Wedding.ics";
+            link.download = "Amreen-Anil-Wedding-Reception.ics";
             link.click();
         });
     }
