@@ -92,7 +92,7 @@ END:VCALENDAR`;
     }
 });
 
-/* GLOBAL COPY FUNCTION (Works locally and on live servers) */
+/* GLOBAL COPY FUNCTION (Immune to calendar downloads & DOM shifts) */
 window.copyUPI = function(elementId, buttonElement) {
     const el = document.getElementById(elementId);
     if (!el) {
@@ -113,7 +113,7 @@ window.copyUPI = function(elementId, buttonElement) {
         }, 2000);
     }
 
-    if (navigator.clipboard) {
+    if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(textToCopy)
             .then(showSuccess)
             .catch(() => fallbackCopy(textToCopy));
@@ -125,14 +125,16 @@ window.copyUPI = function(elementId, buttonElement) {
         const textarea = document.createElement("textarea");
         textarea.value = text;
         textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "0";
         document.body.appendChild(textarea);
         textarea.focus();
         textarea.select();
 
         try {
-            const successful = document.execCommand('copy');
-            if (successful) showSuccess();
+            if (document.execCommand('copy')) {
+                showSuccess();
+            }
         } catch (err) {
             console.error('Fallback copy failed: ', err);
         }
@@ -154,7 +156,7 @@ document.addEventListener("click", function (event) {
     } else {
         const upiItem = button.closest(".upi-item");
         if (upiItem) {
-            targetEl = urpiItem.querySelector("span span[id]");
+            targetEl = upiItem.querySelector("span span[id]");
         }
     }
 
